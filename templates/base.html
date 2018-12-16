@@ -1,0 +1,33 @@
+<h1>Epic Quotes</h1>
+
+{% block main_content %}
+
+<div>
+{% for message in get_flashed_messages() %}
+{{ message }}
+{% endfor %}
+</div>
+
+{% endblock %}
+
+
+<p>--------</p>
+{% block navigation %}
+<ul><i>
+    <li class="nav-item"><a href="{{ url_for('search') }}">Search Quotes</a>
+    <li class="nav-item"><a href="{{ url_for('mycollection') }}">View Collection</a>
+    <li class="nav-item"><a href="{{ url_for('all_authors') }}">All Authors</a>
+    <li class="nav-item"><a href="{{ url_for('all_quotes') }}">All Quotes</a>
+
+
+</ul>
+
+{% endblock %}
+
+{% if current_user.is_authenticated %}
+    <a href="{{ url_for('logout') }}">Sign Out {{current_user.username}}</a>
+{% else %}
+    <a href="{{ url_for('login') }}">Sign In</a>
+{% endif %}
+
+

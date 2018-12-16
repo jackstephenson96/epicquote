@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block navigation %}
+ {{ super() }}
+{% endblock %}
+
+{% block main_content %}
+<b>Quotes for keyword "{{ keyword }}"</b>
+<br>
+<br>
+
+{% if quotes %}
+      <li>{{quotes[0]['quote']}} <br> 
+      <i> - {{ quotes[0]['author'] }}</i>
+      <form method="POST">
+        
+        {{ form.save()}}
+    </form>
+
+      <li>{{quotes[1]['quote']}} <br> 
+      <i> - {{ quotes[1]['author'] }}</i>
+      <form method="POST">
+
+        {{ form.save()}}
+    </form>
+
+
+      <li>{{quotes[2]['quote']}} <br> 
+      <i> - {{ quotes[2]['author'] }}</i>
+      <form method="POST">
+
+        {{ form.save()}}
+    </form>
+
+
+      <li>{{quotes[3]['quote']}} <br> 
+      <i> - {{ quotes[3]['author'] }}</i>
+      <form method="POST">
+
+        {{ form.save()}}
+    </form>
+
+
+      <li>{{quotes[4]['quote']}} <br> 
+      <i> - {{ quotes[4]['author'] }}</i>
+      <form method="POST">
+
+        {{ form.save()}}
+    </form>
+
+      </li>
+
+
+  {% endif %}
+</ul>
+<form method="POST">
+  {{ form.save() }}
+</form>
+
+<form action="/search">
+    <input type="submit" value="Back" />
+</form>
+
+{% if selectform %}
+  <form method="POST">
+    {{ selectform.hidden_tag() }}
+    {{ selectform.multiple }}
+  </form>
+{% endif %}
+
+{% endblock %}
+

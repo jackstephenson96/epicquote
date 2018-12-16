@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block navigation %}
+ {{ super() }}
+{% endblock %}
+
+
+
+{% block main_content %}
+
+<b> All Quotes </b>
+<div>
+{% for message in get_flashed_messages() %}
+<strong style="color:red">{{ message }}</strong>
+{% endfor %}
+</div>
+{% if not quotes %}
+You haven't saved any quotes yet!
+{% endif %}
+
+
+<ul>
+{% if quotes %}
+{% for quote in quotes %}
+  		<li>{{ quote['quote']}} <br> 
+  	    <i> - {{ quote['author'] }}</i>
+  		</li>
+{% endfor %}
+</ul>
+
+{% endif %}
+
+
+<form action="/search">
+    <input type="submit" value="Back" />
+</form>
+
+{% endblock %}

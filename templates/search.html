@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block navigation %}
+ {{ super() }}
+{% endblock %}
+
+{% block main_content %}
+<b>Search quotes by keyword</b>
+<br>
+<br>
+<div>
+{% for message in get_flashed_messages() %}
+<strong style="color:red">{{ message }}</strong>
+{% endfor %}
+</div>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.keyword.label }} {{ form.keyword() }}
+    {{ form.submit() }}
+</form>
+
+
+{% endblock %}
+

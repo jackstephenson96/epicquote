@@ -1,0 +1,24 @@
+
+{% extends 'base.html' %}
+
+
+{% block main_content %}
+<h2>Sign up for a new user account</h2>
+
+<form method="POST">
+	{{ form.hidden_tag() }}
+	{{ form.username.label }} {{ form.username() }}
+	<br>
+	{{ form.email.label }} {{ form.email() }}
+	<br>
+    {{ form.password.label }} {{ form.password() }}
+    <br>
+    {{ form.password2.label }} {{ form.password2() }}
+    <br>
+	{{ form.submit.label }}{{ form.submit() }}
+</form>
+{% endblock %}
+
+{% block navigation %}
+ {{ super() }}
+{% endblock %}

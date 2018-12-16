@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block navigation %}
+ {{ super() }}
+{% endblock %}
+
+{% block main_content %}
+<b>Quotes for keyword "{{ keyword }}"</b>
+<br>
+<br>
+<div>
+{% for message in get_flashed_messages() %}
+<strong style="color:red">{{ message }}</strong>
+{% endfor %}
+</div>
+<form method="post">
+	{{ form.hidden_tag() }}
+
+	{% for entry in form.selects.entries %}
+
+  			
+      		<li>{{ quotes[ loop.index-1 ]['quote']}} <br> 
+      		<i> - {{ quotes[ loop.index-1 ]['author'] }}</i>
+      		</li>
+      		{% for f in entry %}
+      			{{ f }}
+      		{% endfor %}
+  	
+	{% endfor %}
+	{{ form.save()}}
+</form>
+
+
+
+</ul>
+
+
+<form action="/search">
+    <input type="submit" value="Back" />
+</form>
+
+
+{% endblock %}
+

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block navigation %}
+ {{ super() }}
+{% endblock %}
+
+{% block main_content %}
+<b>Quotes for keyword "{{ keyword }}"</b>
+<br>
+<br>
+
+{% if quotes %}
+	{% for q in quotes %}
+  		<li>{{q['quote']}} <br> 
+  		<i> - {{ q['author'] }}</i>
+  		<form data=q method="POST">
+    		{{ form.hidden_tag() }}
+    		{{ form.select() }}
+		</form>
+
+  		</li>
+	{% endfor %}
+	{% endif %}
+</ul>
+<form method="POST">
+	{{ form.save() }}
+</form>
+
+<form action="/search">
+    <input type="submit" value="Back" />
+</form>
+
+{% endblock %}

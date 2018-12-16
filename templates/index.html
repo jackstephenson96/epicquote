@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+
+{% block main_content %}
+
+{% if current_user.is_authenticated %}
+Welcome {{ user.username }}!
+
+
+<br>
+<br>
+Here you can search for quotes by keyword, save your favorites, and view your collection. 
+<form action="/search" method="get">
+    <input type="submit" value="Search" 
+         name="Submit" id="frm1_submit" />
+</form>
+<br>
+{% endif %}
+
+
+{% endblock %}
+{% block navigation %}
+ {{ super() }}
+{% endblock %}
