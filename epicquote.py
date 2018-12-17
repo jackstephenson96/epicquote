@@ -16,6 +16,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 # Imports for helper functions
 # import python_amazon_simple_product_api as AmazonAPI
+TESTING = True
 testQuotes = [{'quote':"test quote 1", 'author': 'author 1'},
 			  {'quote':"test quote 2", 'author': 'author 2'},
 			  {'quote':"test quote 3", 'author': 'author 3'},
@@ -105,7 +106,7 @@ class Quote(db.Model):
 	__tablename__ = "quote"
 	# TODO 364: Add code for the Gif model such that it has the following fields:
 	id = db.Column(db.Integer, primary_key=True)
-	quote = db.Column(db.String(128))
+	quote = db.Column(db.String(600))
 	author_name = db.Column(db.String(128))
 	author_id = db.Column(db.Integer, db.ForeignKey("author.id"))
 	## RELATIONSHIP?
@@ -192,16 +193,20 @@ def getQuote(query):
 	key: your API key.
 	'''
 
-	key = 'f28271b7-fb0c-456e-8bf3-1b3a1fc2306c'
-	url = 'https://fraze.it/api/famous/{}/en/1/no/{}'.format(query, key)
-	r = requests.get(url, headers={'Accept': 'application/json'})
-	try:
-		quotes = [{'quote':q['phrase'], 'author':q['author']} for q in json.loads(r.text)['results'][:5]]
-	except Exception:
-		quotes = []
-		flash("Uh oh! Out of API requests for today")
+	if TESTING == True:
+		quotes = testQuotes
+		return quotes
+	else:
+		key = 'f28271b7-fb0c-456e-8bf3-1b3a1fc2306c'
+		url = 'https://fraze.it/api/famous/{}/en/1/no/{}'.format(query, key)
+		r = requests.get(url, headers={'Accept': 'application/json'})
+		try:
+			quotes = [{'quote':q['phrase'], 'author':q['author']} for q in json.loads(r.text)['results'][:5]]
+		except Exception:
+			quotes = []
+			flash("Uh oh! Out of API requests for today")
 
-	return quotes
+		return quotes
 	## Add error handling
 
 
@@ -365,6 +370,7 @@ def all_authors():
 @app.route('/all_quotes', methods=['GET'])
 def all_quotes():
 	quotes = Quote.query.all()
+	print(quotes)
 	if request.method == "GET":
 		return render_template('all_quotes.html', quotes=quotes)
 

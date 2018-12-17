@@ -21,16 +21,16 @@ You haven't saved any quotes yet!
 
 <ul>
 {% if quotes %}
-{% for quote in quotes %}
+	{% for quote in quotes %}
   		<li>{{ quote['quote']}} <br> 
-  		<i> - {{ quote['author'] }}</i>
+  		<i> - {{ quote['author_name'] }}</i>
   		</li>
 		<form method="POST" action="{{ url_for('delete', quote_id=quote.id)}}">
       	   {{ form.hidden_tag() }}
            {{ form.submit() }}
        </form>
 	</li>
-{% endfor %}
+	{% endfor %}
 </ul>
 
 {% endif %}
