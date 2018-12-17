@@ -16,7 +16,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 # Imports for helper functions
 # import python_amazon_simple_product_api as AmazonAPI
-TESTING = True
+TESTING = False
 testQuotes = [{'quote':"test quote 1", 'author': 'author 1'},
 			  {'quote':"test quote 2", 'author': 'author 2'},
 			  {'quote':"test quote 3", 'author': 'author 3'},
@@ -236,6 +236,7 @@ def get_or_create_collection(db_session, user, quotes=None):
 	collection = db_session.query(Collection).filter_by(user_id=user.id).first()
 	if not collection:
 		collection = Collection(user_id=user.id, quotes=[])
+		print("No collection found!")
 	if quotes != None:
 		for quote in quotes:
 			try:
@@ -243,14 +244,11 @@ def get_or_create_collection(db_session, user, quotes=None):
 					collection.quotes.append(quote)
 					db_session.add(collection)
 					db.session.commit()
-					return collection
 				else:
 					flash('Quote already added')
 			except Exception as e:
 				print('EXCEPTION', e)
-
-	else:
-		return collection
+	return collection
 
 
 ########################
@@ -327,12 +325,12 @@ def search_results(keyword):
 		if request.method == 'POST':
 			quotesOut = []
 			for idx, q in enumerate(quotes):
-
+				# print('choice: ', idx, " ", form.selects.data[idx])
+				# print('quote for choice ', idx, ": ", q)
 				if form.selects.data[idx]['choice'] == True:
 					author = get_or_create_author(db.session, q=q)
 					quote = get_or_create_quote(db.session, q=q, author_id=author.id)
 					quotesOut.append(quote)
-
 			collection = get_or_create_collection(db.session, current_user, quotes=quotesOut)
 			return(redirect(url_for('mycollection')))
 	else:
