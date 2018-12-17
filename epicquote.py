@@ -31,6 +31,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URL') or "postg
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['FRAZEAPI'] = 'f28271b7-fb0c-456e-8bf3-1b3a1fc2306c'
+app.config['HEROKU_ON'] = os.environ.get('HEROKU')
 
 
 '''TODO:
@@ -53,16 +54,16 @@ login_manager.login_view = 'login'
 login_manager.init_app(app) # set up login manager
 
 
+
+
+########################
+######## Models ########
+######################## 
 quotecollection = db.Table('quotecollection',
 	db.Column('collection_id', db.Integer, db.ForeignKey('collection.id')),
 	db.Column('quote_id', db.Integer, db.ForeignKey('quote.id')),
 	db.UniqueConstraint('collection_id', 'quote_id', name='collection_id_quote_id')
 )
-
-########################
-######## Models ########
-######################## 
-
 
 # Special model for users to log in
 class User(UserMixin, db.Model):
