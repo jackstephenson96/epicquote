@@ -40,6 +40,12 @@ app.config['HEROKU_ON'] = os.environ.get('HEROKU')
 [ ] connect quotes with collection
 '''
 
+## Set up Shell context so it's easy to use the shell to debug
+# Define function
+def make_shell_context():
+    return dict( app=app, db=db, Song=Song, Artist=Artist, Album=Album)
+# Add function use to manager
+manager.add_command("shell", Shell(make_context=make_shell_context))
 
 # App addition setups
 manager = Manager(app)
